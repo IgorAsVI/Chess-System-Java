@@ -7,7 +7,7 @@ import Chess.ChessException;
 import Chess.ChessMatch;
 import Chess.ChessPiece;
 import Chess.Pieces.ChessPosition;
-import boardgame.Board;
+
 
 public class program {
     public static void main(String[] args) {

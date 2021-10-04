@@ -2,10 +2,10 @@ package Chess;
 
 import Chess.Pieces.ChessPosition;
 import Chess.Pieces.King;
-import Chess.Pieces.Rook;
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
+import chess.pieces.Rook;
 
 ;
 
@@ -38,15 +38,22 @@ public class ChessMatch {
         Position source = srcPosition.toPosition();
         Position target = targPosition.toPosition();
         validateSourceposition(source);
+        validateTargetposition(source,target);
         Piece capturedPiece = makemove(source,target);
         return (ChessPiece) capturedPiece;
     }
     private void validateSourceposition(Position position){
-        if (!board.thereIsAPiece(position)){
+       if (!board.thereIsAPiece(position)){
             throw new ChessException("There is no piece on source position");
         }
         if (!board.piece(position).isThereAnyPossibleMoves()){
             throw new ChessException("There is no possibles moves for the chosen piece");
+        }
+    }
+
+    private void  validateTargetposition(Position source, Position target){
+        if (!board.piece(source).possibleMove(target)){
+            throw new ChessException("The chosen piece can't move to target position");
         }
     }
     private Piece makemove(Position source,Position target){

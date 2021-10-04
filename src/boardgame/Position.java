@@ -1,6 +1,6 @@
 package boardgame;
 
-import Chess.ChessPosition;
+
 
 public class Position {
     private int row;
@@ -12,7 +12,10 @@ public class Position {
     }
 
 
-
+    public void setValues(int row, int column) {
+        this.row = row;
+        this.column = column;
+    }
 
     public void setRow(int row) {
         this.row = row;
