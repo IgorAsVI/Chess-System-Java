@@ -34,33 +34,41 @@ public class ChessMatch {
         board.placepiece(piece, new ChessPosition(column, row).toPosition());
     }
 
-    public ChessPiece performChessmove(ChessPosition srcPosition,ChessPosition targPosition){
+    public boolean[][] possibleMoves(ChessPosition sourceposition) {
+        Position position = sourceposition.toPosition();
+        validateSourceposition(position);
+        return board.piece(position).possibleMoves();
+    }
+
+    public ChessPiece performChessmove(ChessPosition srcPosition, ChessPosition targPosition) {
         Position source = srcPosition.toPosition();
         Position target = targPosition.toPosition();
         validateSourceposition(source);
-        validateTargetposition(source,target);
-        Piece capturedPiece = makemove(source,target);
+        validateTargetposition(source, target);
+        Piece capturedPiece = makemove(source, target);
         return (ChessPiece) capturedPiece;
     }
-    private void validateSourceposition(Position position){
-       if (!board.thereIsAPiece(position)){
+
+    private void validateSourceposition(Position position) {
+        if (!board.thereIsAPiece(position)) {
             throw new ChessException("There is no piece on source position");
         }
-        if (!board.piece(position).isThereAnyPossibleMoves()){
+        if (!board.piece(position).isThereAnyPossibleMoves()) {
             throw new ChessException("There is no possibles moves for the chosen piece");
         }
     }
 
-    private void  validateTargetposition(Position source, Position target){
-        if (!board.piece(source).possibleMove(target)){
+    private void validateTargetposition(Position source, Position target) {
+        if (!board.piece(source).possibleMove(target)) {
             throw new ChessException("The chosen piece can't move to target position");
         }
     }
-    private Piece makemove(Position source,Position target){
-Piece p = board.removePiece(source);
-Piece captredPiece = board.removePiece(target);
-board.placepiece(p,target);
-return captredPiece;
+
+    private Piece makemove(Position source, Position target) {
+        Piece p = board.removePiece(source);
+        Piece captredPiece = board.removePiece(target);
+        board.placepiece(p, target);
+        return captredPiece;
 
     }
 
@@ -77,7 +85,8 @@ return captredPiece;
         placenewpiece('d', 7, new Rook(board, Color.Black));
         placenewpiece('e', 7, new Rook(board, Color.Black));
         placenewpiece('e', 8, new Rook(board, Color.Black));
-        placenewpiece('d', 8, new King(board, Color.Black));;
+        placenewpiece('d', 8, new King(board, Color.Black));
+        ;
 
     }
 
