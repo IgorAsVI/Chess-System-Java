@@ -7,11 +7,16 @@ import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ChessMatch {
     private int turn;
     private Color currentPlayer;
     private Board board;
+    List<Piece> piecesOnTheBoard = new ArrayList<>();
+    List<Piece> capturedPieces = new ArrayList<>();
 
     public int getTurn() {
         return turn;
@@ -42,6 +47,7 @@ public class ChessMatch {
 
     private void placenewpiece(char column, int row, ChessPiece piece) {
         board.placepiece(piece, new ChessPosition(column, row).toPosition());
+        piecesOnTheBoard.add(piece);
     }
 
     public boolean[][] possibleMoves(ChessPosition sourceposition) {
@@ -80,9 +86,14 @@ public class ChessMatch {
 
     private Piece makemove(Position source, Position target) {
         Piece p = board.removePiece(source);
-        Piece captredPiece = board.removePiece(target);
+        Piece capturedPiece = board.removePiece(target);
         board.placepiece(p, target);
-        return captredPiece;
+        if (capturedPiece != null) {
+            piecesOnTheBoard.remove(capturedPiece);
+            capturedPieces.add(capturedPiece);
+        }
+        return capturedPiece;
+
 
     }
 
