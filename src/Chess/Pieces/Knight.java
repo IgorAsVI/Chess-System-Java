@@ -1,17 +1,17 @@
-package Pieces;
+package Chess.Pieces;
 
 import Chess.ChessPiece;
 import Chess.Color;
 import boardgame.Board;
 
-public class Pawn extends ChessPiece {
-    public Pawn(Board board, Color color) {
-        super(board, color);
-    }
-
+public class Knight extends ChessPiece {
     @Override
     public String toString() {
-        return "P";
+        return "K";
+    }
+
+    public Knight(Board board, Color color) {
+        super(board, color);
     }
 
     @Override
