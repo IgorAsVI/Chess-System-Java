@@ -1,5 +1,6 @@
 package Chess;
 
+import Chess.Pieces.Bishop;
 import Chess.Pieces.ChessPosition;
 import Chess.Pieces.King;
 
@@ -208,6 +209,8 @@ public class ChessMatch {
         placenewpiece('f', 2, new Pawn(board, Color.White));
         placenewpiece('g', 2, new Pawn(board, Color.White));
         placenewpiece('h', 2, new Pawn(board, Color.White));
+        placenewpiece('c', 1, new Bishop(board, Color.White));
+        placenewpiece('f', 1, new Bishop(board, Color.White));
 
         placenewpiece('a', 8, new Rook(board, Color.Black));
         placenewpiece('e', 8, new King(board, Color.Black));
@@ -220,6 +223,8 @@ public class ChessMatch {
         placenewpiece('f', 7, new Pawn(board, Color.Black));
         placenewpiece('g', 7, new Pawn(board, Color.Black));
         placenewpiece('h', 7, new Pawn(board, Color.Black));
+        placenewpiece('c', 8, new Bishop(board, Color.Black));
+        placenewpiece('f', 8, new Bishop(board, Color.Black));
 
     }
 
