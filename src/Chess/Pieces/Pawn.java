@@ -1,20 +1,31 @@
 
 
-        package chess.pieces;
+package chess.pieces;
 
-        import Chess.ChessPiece;
-        import Chess.Color;
-        import boardgame.Board;
-        import boardgame.Position;
+import Chess.ChessMatch;
+import Chess.ChessPiece;
+import Chess.Color;
+import Chess.Pieces.Rook;
+import boardgame.Board;
+import boardgame.Position;
+import org.omg.PortableServer.POA;
 
-        public class Pawn extends ChessPiece {
+public class Pawn extends ChessPiece {
+
 
     public Pawn(Board board, Color color) {
         super(board, color);
+
     }
 
     @Override
-    public boolean[][] possibleMoves() {
+    public String toString() {
+        return "P";
+    }
+
+
+    @Override
+    public boolean[][] possibleMoves(){
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
         Position p = new Position(0, 0);
@@ -37,8 +48,7 @@
             if (getBoard().positionExists(p) && isThereopponentPiece(p)) {
                 mat[p.getRow()][p.getColumn()] = true;
             }
-        }
-        else {
+        } else {
             p.setValues(position.getRow() + 1, position.getColumn());
             if (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
                 mat[p.getRow()][p.getColumn()] = true;
@@ -56,14 +66,15 @@
             if (getBoard().positionExists(p) && isThereopponentPiece(p)) {
                 mat[p.getRow()][p.getColumn()] = true;
             }
+
+
         }
         return mat;
     }
-
-    @Override
-    public String toString() {
-        return "P";
-    }
-
 }
+
+
+
+
+
 

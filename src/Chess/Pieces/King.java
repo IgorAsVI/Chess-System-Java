@@ -1,14 +1,17 @@
 package Chess.Pieces;
 
+import Chess.ChessMatch;
 import Chess.ChessPiece;
 import Chess.Color;
 import boardgame.Board;
 import boardgame.Position;
 
 public class King extends ChessPiece {
+    private ChessMatch chessMatch;
 
-    public King(Board board, Color color) {
+    public King(Board board, Color color, ChessMatch chessMatch) {
         super(board, color);
+        this.chessMatch = chessMatch;
     }
 
     @Override
@@ -16,10 +19,16 @@ public class King extends ChessPiece {
         return "K";
     }
 
+    private boolean testRookCastling(Position position) {
+        ChessPiece p = (ChessPiece) getBoard().piece(position);
+        return p != null && p.getColor() == getColor() && p.getMovecount() == 0;
+    }
+
     private boolean canMove(Position position) {
-        ChessPiece p = (ChessPiece)getBoard().piece(position);
+        ChessPiece p = (ChessPiece) getBoard().piece(position);
         return p == null || p.getColor() != getColor();
     }
+
     @Override
     public boolean[][] possibleMoves() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
@@ -74,10 +83,35 @@ public class King extends ChessPiece {
             mat[p.getRow()][p.getColumn()] = true;
 
         }
+        // special move castling
+        if (getMovecount() == 0 && !chessMatch.getCheck()) {
+            // KIngside Rook
+            Position posT1 = new Position(position.getRow(), position.getColumn() + 3);
+            if (testRookCastling(posT1)) {
+                Position pos1 = new Position(position.getRow(), position.getColumn() + 1);
+                Position pos2 = new Position(position.getRow(), position.getColumn() + 2);
+                if (getBoard().piece(pos1) == null && getBoard().piece(pos2) == null) {
+                    mat[position.getRow()][position.getColumn() + 2] = true;
+                }
+            }
+        }
+        // Queenseide Rook
+        if (getMovecount() == 0 && !chessMatch.getCheck()) {
+            Position posT1 = new Position(position.getRow(), position.getColumn() - 4);
+            if (testRookCastling(posT1)) {
+                Position pos1 = new Position(position.getRow(), position.getColumn() - 1);
+                Position pos2 = new Position(position.getRow(), position.getColumn() - 2);
+                Position pos3 = new Position(position.getRow(), position.getColumn() - 3);
+                if (getBoard().piece(pos1) == null && getBoard().piece(pos2) == null && getBoard().piece(pos3) == null) {
+                    mat[position.getRow()][position.getColumn() - 2] = true;
+                }
+            }
+        }
         return mat;
-
-
     }
 
 
 }
+
+
+
